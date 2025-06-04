@@ -1,5 +1,6 @@
 package com.amar.SpringProject;
 
+import io.github.cdimascio.dotenv.Dotenv;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -7,11 +8,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class SpringProjectApplication {
 
 	public static void main(String[] args) {
-		// La variable MONGODB_URI est lue directement depuis les variables d'environnement
-		String uri = System.getenv("MONGODB_URI");
+		// Charger les variables du fichier .env
+		Dotenv dotenv = Dotenv.configure().load();
 
-		// Tu peux afficher ou logguer l'URI si besoin (à retirer en production)
-		System.out.println("MongoDB URI: " + uri);
+		// Injecter la variable MONGODB_URI dans les propriétés système
+		System.setProperty("SPRING_DATA_MONGODB_URI", dotenv.get("SPRING_DATA_MONGODB_URI"));
 
 		SpringApplication.run(SpringProjectApplication.class, args);
 	}
