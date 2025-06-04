@@ -8,11 +8,14 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class SpringProjectApplication {
 
 	public static void main(String[] args) {
-		// Charger les variables du fichier .env
-		Dotenv dotenv = Dotenv.configure().load();
-
-		// Injecter la variable MONGODB_URI dans les propriétés système
-		System.setProperty("SPRING_DATA_MONGODB_URI", dotenv.get("SPRING_DATA_MONGODB_URI"));
+		// En local, charge .env ; sur Railway, les variables sont déjà dans le système
+		if (System.getenv("RAILWAY_STATIC_URL") == null) {
+			Dotenv dotenv = Dotenv.configure().ignoreIfMissing().load();
+			String uri = dotenv.get("SPRING_DATA_MONGODB_URI");
+			if (uri != null) {
+				System.setProperty("SPRING_DATA_MONGODB_URI", uri);
+			}
+		}
 
 		SpringApplication.run(SpringProjectApplication.class, args);
 	}
