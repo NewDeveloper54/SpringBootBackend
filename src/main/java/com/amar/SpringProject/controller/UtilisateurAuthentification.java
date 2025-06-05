@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
+
 import java.util.Optional;
 
 @CrossOrigin(origins = "*")
@@ -30,7 +31,7 @@ public class UtilisateurAuthentification {
         return ResponseEntity.ok(savedUser);
     }
 
-    // Endpoint pour login
+    // Endpoint pour se connecter
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody Utilisateur utilisateur) {
         Optional<Utilisateur> existingUser = utilisateurService.trouverParEmail(utilisateur.getEmail());

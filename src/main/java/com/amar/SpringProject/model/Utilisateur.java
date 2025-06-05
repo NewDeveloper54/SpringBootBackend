@@ -5,7 +5,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "users")
 public class Utilisateur {
-
+// ici c'est l'uilisateur avec ses informations
     @Id
     private String id;
 
